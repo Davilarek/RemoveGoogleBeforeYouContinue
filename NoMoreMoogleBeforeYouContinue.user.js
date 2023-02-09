@@ -1,7 +1,6 @@
 // ==UserScript==
 // @name         No more google before you continue
-// @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Universal solution to remove "Before you continue"
 // @author       Davilarek
 // @match        https://www.google.com/
