@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         No more google before you continue
-// @version      0.5
+// @version      0.6
 // @description  Universal solution to remove "Before you continue"
 // @author       Davilarek
 // @match        https://www.google.com
@@ -41,10 +41,16 @@
             // next filter out all buttons from dialog.
             var filter = Array.from(element.getElementsByTagName("button")).filter(x => !x.attributes.role && !x.attributes["aria-label"]);
 
-            // no buttons found. Probably not in incognito mode or dialog is already closed.
+            // no buttons found. Probably not in incognito mode or dialog is already closed. Or using android
             if (filter.length == 0)
+            {
+                element = Array.from(document.body.children).filter(x => x.attributes["aria-modal"] && !x.attributes["data-hveid"] && x.tagName == "DIV")[0];
+                filter = Array.from(element.getElementsByTagName("button")).filter(x => !x.attributes.role && !x.attributes["aria-label"]);
+                if (filter.length == 0)
+                    return;
+                filter[1].click();
                 return;
-
+            }
             // simulate click of "Deny" button.
             filter[0].click();
             break;
