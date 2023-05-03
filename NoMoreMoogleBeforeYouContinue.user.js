@@ -73,7 +73,7 @@
         case "https://www.youtube.com": {
             const setup = () => {
                 setTimeout(() => {
-                    let filtered = Array.from(document.getElementsByTagName("ytd-button-renderer")).filter(x => x.parentElement.parentElement.parentElement.className.includes("consent") && x.parentElement.parentElement.parentElement.className.includes("body"));
+                    let filtered = Array.from(document.getElementsByTagName("ytd-button-renderer")).filter(x => x?.parentElement?.parentElement?.parentElement?.className.includes("consent") && x?.parentElement?.parentElement?.parentElement?.className.includes("body"));
                     if (filtered.length > 0) {
                         let correctIndx = 0;
                         //debugger;
