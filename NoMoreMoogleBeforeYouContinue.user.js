@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         No more google before you continue
-// @version      1.1
+// @version      1.2
 // @description  Universal solution to remove "Before you continue"
 // @author       Davilarek
 // @match        http*://www.google.com
+// @match        http*://www.google.com/*
 // @match        http*://consent.google.com/m?continue=*
+// @match        http*://consent.youtube.com/m?continue=*
 // @match        http*://m.youtube.com
 // @match        http*://m.youtube.com/*
 // @match        http*://www.youtube.com/*
@@ -32,6 +34,7 @@
     'use strict';
     switch (new URL(location.href).origin)
     {
+        case "https://consent.youtube.com":
         case "https://consent.google.com": {
             let elements = Array.from(document.getElementsByTagName("form")).filter(x=>!checkStyleOrClass(x.parentElement, "display", "none"));
             elements[0].getElementsByTagName("button")[0].click();
