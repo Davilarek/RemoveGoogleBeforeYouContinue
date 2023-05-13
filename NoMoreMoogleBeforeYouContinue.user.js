@@ -42,29 +42,46 @@
         }
         case "https://www.google.com":
         case "https://google.com": {
+
+            const makeFilter = (elToFilter) => {
+                return Array.from(elToFilter).filter(x => !x.attributes.role && !x.attributes["aria-label"]);
+            };
+
             // filter out body. In normal case there should be 3 DIV's. First is the search UI, second is "Before you continue dialog" and I don't know what is third.
             // this code filters out the search UI, so there is only the dialog and the thing I don't know what it is.
-            let element = Array.from(document.body.children).filter(x => !x.attributes["data-hveid"] && x.tagName == "DIV")[0];
+            let element = Array.from(document.body.children).filter(x => !x.attributes["data-hveid"] && x.tagName == "DIV" && !x.attributes["aria-hidden"])[0];
 
             // next filter out all buttons from dialog.
-            let filter = Array.from(element.getElementsByTagName("button")).filter(x => !x.attributes.role && !x.attributes["aria-label"]);
+            let filter = makeFilter(element.getElementsByTagName("button"));
 
-            // no buttons found. Probably not in incognito mode or dialog is already closed. Or using android
-            if (filter.length == 0 || Array.from(document.body.children).filter(x => x.attributes["aria-modal"] && !x.attributes["data-hveid"] && x.tagName == "DIV")[0])
+            // no buttons found. Probably not in incognito mode or dialog is already closed.
+            // if (filter.length == 0 || Array.from(document.body.children).filter(x => x.attributes["aria-modal"] && !x.attributes["data-hveid"] && x.tagName == "DIV")[0])
+            // debugger;
+            let targetIndx = 0;
+            if (filter.length == 0)
             {
+                /*
                 //setTimeout(() => {
                 element = Array.from(document.body.children).filter(x => x.attributes["aria-modal"] && !x.attributes["data-hveid"] && x.tagName == "DIV")[0];
-                filter = Array.from(element.getElementsByTagName("button")).filter(x => !x.attributes.role && !x.attributes["aria-label"]);
+                if (!element)
+                    return;
+                filter = makeFilter(element.getElementsByTagName("button"));
                 if (filter.length == 0)
                     return;
                 filter[1].click();
+                */
                 return;
                 //}, 500);
             }
+            if (filter.length == 3)
+            {
+                targetIndx = 1; // we are dealing with android, or google updated something
+            }
             // simulate click of "Deny" button.
-            filter[0].click();
+            filter[targetIndx].click();
             break;
         }
+        // mobile youtube
         case "https://m.youtube.com": {
             setTimeout(() => {
                 let elements = document.getElementsByClassName("eom-reject");
@@ -73,6 +90,7 @@
             }, 2000);
             break;
         }
+        // pc youtube
         case "https://www.youtube.com": {
             const setup = () => {
                 setTimeout(() => {
