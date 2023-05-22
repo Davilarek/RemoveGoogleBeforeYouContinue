@@ -7,3 +7,4 @@ Use [Violentmonkey](https://violentmonkey.github.io/) or whatever that runs user
 ## Currently supported:
 - On YouTube for computers and mobile (web)
 - On Google for computers and mobile (web)
+- On consent pages (YouTube and Google services)
