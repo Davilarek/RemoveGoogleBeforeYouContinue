@@ -1,18 +1,19 @@
 // ==UserScript==
 // @name         No more google before you continue
-// @version      1.2
+// @version      1.2.1
 // @description  Universal solution to remove "Before you continue"
 // @author       Davilarek
-// @match        http*://www.google.com
+// @match        http*://www.google.com/
 // @match        http*://www.google.com/*
 // @match        http*://consent.google.com/m?continue=*
 // @match        http*://consent.youtube.com/m?continue=*
-// @match        http*://m.youtube.com
+// @match        http*://m.youtube.com/
 // @match        http*://m.youtube.com/*
 // @match        http*://www.youtube.com/*
-// @match        http*://www.youtube.com
+// @match        http*://www.youtube.com/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @grant        none
+// @run-at       document-end
 // ==/UserScript==
 
 (function() {
