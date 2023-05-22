@@ -11,3 +11,5 @@ Use [Violentmonkey](https://violentmonkey.github.io/) or whatever that runs user
 
 ## Note
 This script doesn't remove the dialogs nor hides it's visibility, instead it automatically declines them.
+
+### Special thanks to [Contributors](https://github.com/Davilarek/RemoveGoogleBeforeYouContinue/graphs/contributors)
