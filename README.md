@@ -8,3 +8,6 @@ Use [Violentmonkey](https://violentmonkey.github.io/) or whatever that runs user
 - On YouTube for computers and mobile (web)
 - On Google for computers and mobile (web)
 - On consent pages (YouTube and Google services)
+
+## Note
+This script doesn't remove the dialogs nor hides it's visibility, instead it automatically declines them.
