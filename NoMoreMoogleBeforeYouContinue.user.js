@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         No more google before you continue
-// @version      1.2.2
+// @version      1.3
 // @description  Universal solution to remove "Before you continue"
 // @author       Davilarek
 // @match        http*://www.google.com/
@@ -19,7 +19,8 @@
 // @supportURL   https://github.com/Davilarek/RemoveGoogleBeforeYouContinue/issues
 // ==/UserScript==
 
-(function() {
+(function () {
+    'use strict';
     function checkStyleOrClass(element, styleName, styleValue) {
         if (element.style[styleName] === styleValue) {
             return true;
@@ -35,12 +36,38 @@
         return false;
     }
 
-    'use strict';
-    switch (new URL(location.href).origin)
-    {
+    function waitForElement(selector, callback, timeout = 5000, timedOut = (() => { })) {
+        let timeoutId = null;
+
+        const element = document.querySelector(selector);
+        if (element) {
+            callback(element);
+            return;
+        }
+
+        const observer = new MutationObserver(function (mutations) {
+            const element = document.querySelector(selector);
+            if (element) {
+                observer.disconnect();
+                clearTimeout(timeoutId);
+                callback(element);
+            }
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        const clearAndDisconnect = function () {
+            observer.disconnect();
+            timedOut();
+        };
+
+        timeoutId = setTimeout(clearAndDisconnect, timeout);
+    }
+
+    switch (new URL(location.href).origin) {
         case "https://consent.youtube.com":
         case "https://consent.google.com": {
-            let elements = Array.from(document.getElementsByTagName("form")).filter(x=>!checkStyleOrClass(x.parentElement, "display", "none"));
+            let elements = Array.from(document.getElementsByTagName("form")).filter(x => !checkStyleOrClass(x.parentElement, "display", "none"));
             elements[0].getElementsByTagName("button")[0].click();
             break;
         }
@@ -62,8 +89,7 @@
             // if (filter.length == 0 || Array.from(document.body.children).filter(x => x.attributes["aria-modal"] && !x.attributes["data-hveid"] && x.tagName == "DIV")[0])
             // debugger;
             let targetIndx = 0;
-            if (filter.length == 0)
-            {
+            if (filter.length == 0) {
                 /*
                 //setTimeout(() => {
                 element = Array.from(document.body.children).filter(x => x.attributes["aria-modal"] && !x.attributes["data-hveid"] && x.tagName == "DIV")[0];
@@ -77,8 +103,7 @@
                 return;
                 //}, 500);
             }
-            if (filter.length == 3)
-            {
+            if (filter.length == 3) {
                 targetIndx = 1; // we are dealing with android, or google updated something
             }
             // simulate click of "Deny" button.
@@ -96,25 +121,20 @@
         }
         // pc youtube
         case "https://www.youtube.com": {
-            const setup = () => {
-                setTimeout(() => {
+            waitForElement("#video-preview", () => {
+                // debugger;
+                // setTimeout(() => {
+                waitForElement("#lightbox", () => {
                     let filtered = Array.from(document.getElementsByTagName("ytd-button-renderer")).filter(x => x?.parentElement?.parentElement?.parentElement?.className.includes("consent") && x?.parentElement?.parentElement?.parentElement?.className.includes("body"));
                     if (filtered.length > 0) {
                         let correctIndx = 0;
-                        //debugger;
+                        // debugger;
                         filtered[correctIndx].getElementsByTagName("button")[0].click();
                     }
-                }, 2900);
-            };
-            if(document.readyState === 'ready' || document.readyState === 'complete') {
-                setup();
-            } else {
-                document.onreadystatechange = function () {
-                    if (document.readyState == "complete") {
-                        setup();
-                    }
-                }
-            }
+                });
+                // }, undefined, () => { console.log("timed out"); });
+                // }, 2900);
+            }, Infinity);
             break;
         }
         default:
