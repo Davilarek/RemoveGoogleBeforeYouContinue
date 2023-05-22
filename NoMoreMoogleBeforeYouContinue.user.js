@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         No more google before you continue
-// @version      1.2.1
+// @version      1.2.2
 // @description  Universal solution to remove "Before you continue"
 // @author       Davilarek
 // @match        http*://www.google.com/
@@ -14,6 +14,9 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @grant        none
 // @run-at       document-end
+// @downloadURL  https://github.com/Davilarek/RemoveGoogleBeforeYouContinue/raw/main/NoMoreMoogleBeforeYouContinue.user.js
+// @homepageURL  https://github.com/Davilarek/RemoveGoogleBeforeYouContinue
+// @supportURL   https://github.com/Davilarek/RemoveGoogleBeforeYouContinue/issues
 // ==/UserScript==
 
 (function() {
