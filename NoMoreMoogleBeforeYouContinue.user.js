@@ -114,8 +114,11 @@
         case "https://m.youtube.com": {
             waitForElement(".eom-reject", () => {
                 let elements = document.getElementsByClassName("eom-reject");
-                if (elements.length > 0)
-                    elements[0].getElementsByTagName("button")[0].onclick()
+                if (elements.length > 0) {
+                    setTimeout(() => {
+                        elements[0].getElementsByTagName("button")[0].onclick();
+                    }, 1000);
+                }
             }, 5000);
             break;
         }
