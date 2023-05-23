@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         No more google before you continue
-// @version      1.3.4
+// @version      1.3.5
 // @description  Universal solution to remove "Before you continue"
 // @author       Davilarek
 // @match        http*://www.google.com/
@@ -126,15 +126,16 @@
                 // debugger;
                 // setTimeout(() => {
                 waitForElement("#lightbox", (el) => {
-                    if (checkStyleOrClass(el.firstElementChild, "display", "none"))
-                        return;
+                    // debugger;
+                    // if (checkStyleOrClass(el.firstElementChild, "display", "none"))
+                    //     return;
                     let filtered = Array.from(document.getElementsByTagName("ytd-button-renderer")).filter(x => x?.parentElement?.parentElement?.parentElement?.className.includes("consent") && x?.parentElement?.parentElement?.parentElement?.className.includes("body"));
                     if (filtered.length > 0) {
                         let correctIndx = 0;
                         // debugger;
                         filtered[correctIndx].getElementsByTagName("button")[0].click();
                     }
-                });
+                }, 7500);
                 // }, undefined, () => { console.log("timed out"); });
                 // }, 2900);
             }, Infinity);
