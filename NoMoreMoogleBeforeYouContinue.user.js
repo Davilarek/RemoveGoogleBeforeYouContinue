@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         No more google before you continue
-// @version      1.3
+// @version      1.3.1
 // @description  Universal solution to remove "Before you continue"
 // @author       Davilarek
 // @match        http*://www.google.com/
@@ -112,11 +112,11 @@
         }
         // mobile youtube
         case "https://m.youtube.com": {
-            setTimeout(() => {
+            waitForElement(".eom-reject", () => {
                 let elements = document.getElementsByClassName("eom-reject");
                 if (elements.length > 0)
                     elements[0].getElementsByTagName("button")[0].onclick()
-            }, 2000);
+            }, 5000);
             break;
         }
         // pc youtube
